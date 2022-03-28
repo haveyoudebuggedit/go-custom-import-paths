@@ -1,3 +1,6 @@
 {
-  "packagename": "https://github.com/yourorg/go-packagename"
+  "packagename": {
+    "URL": "https://github.com/yourorg/go-packagename",
+    "MainBranch": "main"
+  }
 }

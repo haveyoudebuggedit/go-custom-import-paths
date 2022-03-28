@@ -19,8 +19,8 @@ var templateText = `<!DOCTYPE html>
     <meta name="go-source"
           content="{{ .Domain }}/{{ .Name }}
                    {{ .URL }}
-                   {{ .URL }}/tree/main{/dir}
-                   {{ .URL }}/blob/main{/dir}/{file}#L{line}" />
+                   {{ .URL }}/tree/{{ .MainBranch }}{/dir}
+                   {{ .URL }}/blob/{{ .MainBranch }}{/dir}/{file}#L{line}" />
     <meta http-equiv="refresh" content="0; url={{ .URL }}">
 </head></html>
 `
@@ -32,12 +32,18 @@ var indexFileContents = `<!DOCTYPE html>
 </head></html>
 `
 
-type config map[string]string
+type config map[string]configEntry
+type configEntry struct {
+    URL        string `json:"URL"`
+    MainBranch string `json:"MainBranch"`
+}
+
 type entry struct {
     Name          string
     URL           string
     Domain        string
     GitHubOrgName string
+    MainBranch    string
 }
 
 func main() {
@@ -79,9 +85,16 @@ func main() {
         panic(fmt.Errorf("failed load %s (%w)", "packages.json", err))
     }
     tpl := template.Must(template.New("html").Parse(templateText))
-    for name, url := range *cfg {
+    for name, cfgEntry := range *cfg {
+        if cfgEntry.MainBranch == "" {
+            cfgEntry.MainBranch = "main"
+        }
         e := entry{
-            name, url, domainName, githubOrgName,
+            name,
+            cfgEntry.URL,
+            domainName,
+            githubOrgName,
+            cfgEntry.MainBranch,
         }
         dir := filepath.Join(ghPagesDir, name)
         if err := os.MkdirAll(dir, 0755); err != nil {
