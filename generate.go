@@ -52,7 +52,7 @@ func main() {
         if repository == "" || !strings.HasPrefix(repository, fmt.Sprintf("%s/", githubOrgName)) {
             panic(fmt.Errorf("please provide a domain name via the DOMAIN_NAME environment variable or the repository via the GITHUB_REPOSITORY name"))
         }
-        domainName = repository[len(githubOrgName):]
+        domainName = repository[len(githubOrgName)+1:]
     }
 
     ghPagesDir := "gh-pages"
