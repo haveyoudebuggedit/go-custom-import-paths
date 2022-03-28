@@ -34,7 +34,7 @@ jobs:
       - name: Checkout
         run: |
           set -euo pipefail
-          git clone https://github.com/${GITHUB_REPOSITORY} dist || (
+          git clone -b gh-pages https://github.com/${GITHUB_REPOSITORY} dist || (
             set -euo pipefail
             mkdir -p dist
             cd dist
