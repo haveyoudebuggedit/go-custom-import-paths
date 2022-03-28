@@ -1,4 +1,16 @@
 # Go package redirector
 
-This is a template repository you can fork into your own organization to create [custom import paths for your Go packages](https://debugged.it/blog/custom-go-import-paths). **Make sure the forked repository name has your domain name in it.**
+Do you want custom Go import paths like this?
+
+```go
+import "go.yourdomain.com/yourpackage"
+```
+
+If yes, follow these simple steps:
+
+1. Use this template repository and create a repository in your own organization named `go.yourdomain.com`.
+2. Customize the [packages.json](packages.json) file.
+3. Set up a DNS record: `go.yourdomain.com. IN CNAME yourgithuborg.github.io.`
+
+How does it work? [Read the blog post here.](https://debugged.it/blog/custom-go-import-paths)
 

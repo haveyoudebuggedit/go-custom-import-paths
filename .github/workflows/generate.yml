@@ -34,13 +34,13 @@ jobs:
       - name: Checkout
         run: |
           set -euo pipefail
-          git clone -b gh-pages https://github.com/${GITHUB_REPOSITORY} dist || (
+          git clone -b gh-pages https://${{GITHUB_TOKEN}}@github.com/${GITHUB_REPOSITORY} dist || (
             set -euo pipefail
             mkdir -p dist
             cd dist
             git init
             git checkout -b gh-pages
-            git remote add origin https://github.com/${GITHUB_REPOSITORY}
+            git remote add origin https://${{GITHUB_TOKEN}}@github.com/${GITHUB_REPOSITORY}
           )
       - name: Download artifacts
         uses: actions/download-artifact@v2
